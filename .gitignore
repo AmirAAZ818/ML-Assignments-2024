@@ -1,2 +1,6 @@
 
 /Analyzing Titanic Survival Rates/Dataset
+*.aux
+*.log
+*.gz
+Analyzing Titanic Survival Rates/Report_src/Report_Titanic.pdf
