@@ -1,25 +1,32 @@
 \documentclass{article}
-
+\linespread{1.25}
 
 \usepackage[top = 1cm, right=2cm, left=2cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xepersian}
 \settextfont{B Nazanin}
-\setlatintextfont{CMU Serif}
+\setlatinmonofont{CMU Serif}
+%\setlatinmonofont{Times New Roman}
+\setlatintextfont{Times New Roman}
+
+% Set Latin Modern font for the bullets in itemizea
+\newfontfamily\latinbullet{Latin Modern Roman}
 
 
 
-\title{گزارش تکلیف درس یادگیری ماشین}
-\author{امیرحسین ابوالحسنی\\
-400405003}
+\title{گزارش تکلیف 
+	\lr{Analyzing Titanic Survival Rates}
+}
+\author{درس یادگیری ماشین}
 \date{
-	پاییز 1403
+	امیرحسین ابوالحسنی\\
+	400405003
 	}
 	
 	
 % Commands
 \newcommand{\column}[1]{\lr{\textit{#1}}}
-
+\renewcommand{\labelitemi}{{\latinbullet\textbullet}} % Use the bullet from Latin Modern font
 
 \begin{document}
 	\maketitle
@@ -29,9 +36,8 @@
 	\lr{Exploratory Data Analysis (EDA)}،
 	به معنی بررسی داده‌ها به صورت آماری، پاکسازی داده ها و مصورسازی آنهاست، این کار یکی از مهمترین مراحل در یک پروژه می‌باشد.\\
 	در این گزارش، به تحلیل دیتاست مشخصات مسافران کشتی تایتانیک میپردازیم.
-	
-	\section*{روش کار}
-	\subsection*{بررسی معنایی دیتاست}
+	\vspace{10pt}
+	\section{بررسی معنایی دیتاست}
 	دیتاست تایتانیک، متشکل از 11 ستون و 1309 نمونه می‌باشد.\\
 	در اینجا معنی هریک از ستون‌ها ارائه می‌گردد:‌
 	
@@ -54,8 +60,8 @@
 			  & بندر محل سوار شدن & \column{Embarked}\\
 			\end{tabular}	
 	\end{center}
-
-	\subsection*{جمع آوری و تمیز کردن دیتا}
+	\vspace{10pt}
+	\section{جمع آوری و تمیز کردن دیتا}
 	با توجه به اینکه ستون تارگت از فایل 
 	\lr{test.csv}
 	جدا شده و در فایل 
@@ -138,13 +144,129 @@
 		}
 		\label{fig: nullpies}
 	\end{figure}
+	\vspace{10pt}
+	\section{آنالیزهای آماری و مصورسازی}\label{sec: stats}
+	\subsection{جمعیت}
+	 در اینجا مقدار تخصیص جمعیت به گروه ها‌ی مهم را مشاهده می‌کنیم.
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[scale=0.4]{./figs/Passenger's Population In Different Groups}
+		\caption{
+			نسبت پخش شدن جمعیت با توجه به ویژگی‌های 
+			\column{Sex, Pclass, Embarked}
+		}
+		\label{fig: passenger's_Pop}
+	\end{figure} 
 	
+	\subsection{نجات یافتگی}
+	همانطور که از شکل 
+	\ref{fig: SurvivalRatePie}
+	پیداست،
+	در این بخش بررسی می‌شود که در گروه‌های ویژگی‌های
+	\column{Sex, Pclass}
+	و در کل، فراوانی افراد نجات یافته و نیافته چگونه است.\\
+	همچنین با این استدلال که پورت محل سوار شدن نباید تاثیری در زنده ماندن یا نماندن داشته باشد، از گروه بندی بر اساس این ستون صرف نظر شده است.
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[scale=0.3]{./figs/Survival Rate of the Passengers by Pclass}
+		\caption{
+			نسبت پخش شدن نجات یافتگان و نیافتگان، با توجه به ویژگی‌های 
+			\column{Sex, Pclass}
+			و همچنین در تمامی نمونه‌ها
+		}
+		\label{fig: SurvivalRatePie}
+	\end{figure} 	
 	
-	\section*{نتیجه گیری}
-	لورم اپسیوم
-	لورم اپسیوم
-	\section*{منابع}
-	لورم اپسیوم
-	لورم اپسیوم
+	همانطور که در شکل 
+	\ref{fig: SurvivalAgeDist}
+	دیده می‌شود، در ادامه در گروه نجات یافته‌ها و نیافته‌ها، توزیع سن بررسی می‌شود تا کمک کند رابطه بین سن و وضعیت زنده ماندن را بیش از پیش متوجه شویم.
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[scale=0.35]{./figs/Age Distribution for Different Survival Status}
+		\caption{
+			توزیع سن در گروه‌های ستون
+			\column{Survived}
+		}
+		\label{fig: SurvivalAgeDist}
+	\end{figure}
 	
+	می‌توان از ویژگی‌های 
+	\column{SibSp, ParCh}
+	برای متوجه شدن جمعیت نزدیکان هر مسافر استفاده کرده و رابطه این ویژگی جدید را با ویژگی نجات یافتگی به دست آورد.\\
+	 برای این کار، این دو ستون با بکدیگر جمع شده و ستون جدیدی را به نام 
+	 \column{Family Population}
+	 ایجاد می‌کنند.
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[scale=0.65]{./figs/Survival of Passengers by Family Population}
+		\caption{
+			فروانی جمعیت خانواده هر فرد در گروه‌های ستون
+			\column{Survived}
+		}
+		\label{fig: Family Population}
+	\end{figure} 
+	
+	\subsection{سن}
+	پراکندگی داده‌ها در این ویژگی بین کل مسافرین و همچنین بر اساس مقادیر ویژگی‌های 
+	\column{Survived, Pclass}
+	می‌تواند دید بهتری نسب به داده‌ها به ما نشان دهد. (شکل~\ref{fig: AgeBoxPlot})
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.3]{./figs/Box plots of Age Column in Different Groups}
+		\caption{
+			نمودار جعبه‌ای برای ویژگی‌ سن با توجه به مقادیر ستون‌های
+			\column{Survived, Pclass}
+		}
+		\label{fig: AgeBoxPlot}
+	\end{figure}
+	\vspace{10pt}
+	
+
+	\section*{نتیجه‌گیری}
+	درباره ارتباطات بین ویژگی‌های دیتاست و زنده‌ماندن افراد، می‌توان با تکیه بر بخش 
+	\ref{sec: stats}
+	فرضیه‌هایی را اثبات کرد.
+	
+	در شکل 
+	\ref{fig: SurvivalRatePie}
+	می‌توان با نگاهی دقیق متوجه شد که بیش از نیمی از مسافران (حدود 800 نفر) جان خودشان را از دست داده اند که بیشترشان مرد بوده اند. این مورد با توجه به بیشتر بودن تعداد مردان نسبت به زنان 
+	(شکل
+	\ref{fig: passenger's_Pop}
+	)
+	 قابل استدلال می‌باشد.
+	 
+	 طبق شکل 
+	 \ref{fig: Family Population}
+	 جمعیت خوانواده هر مسافر بر روی کشتی، رابطه تقریبا معکوسی با زنده ماندن آن مسافر داشته است و این یکی از جالب ترین نکاتی‌ است که می‌توان در این آنالیزها به آن پی برد.
+	 
+	 از دیگر موارد بررسی شده این است که توزیع سن در گروه نجات یافته‌ها و نیافته‌ها چگونه است.\\
+	 با توجه به شکل 
+	 \ref{fig: SurvivalAgeDist}
+	 و مقایسه رنج 0 تا 2 سال می‌توان فهمید که کودکان بسیار زیادی اللخصوص نوزادان زیر یک سال نجات داده شده اند.\\
+	 توزیع بقیه سن‌ها در هر دو دسته تقریبا یکسان می‌باشد، تنها پیک در 25 سالگی افراد نجات نیافته پیداست  که با توجه به جمعیت بالای این دسته سنی 
+	 (شکل 
+	 \ref{fig: AgeBoxPlot})
+	  بر روی کشتی قابل استدلال می‌باشد.
+	  
+	  پراکندگی سن با نمودارهای جعبه‌ای در شکل 
+	  \ref{fig: AgeBoxPlot}
+	  بسیار به ما در پیدا کردن میانگین و مد در گروه‌ها کمک می‌کند.
+	  می‌توان برداشت برداشت کرد که افراد با سن بالای 60 سال بیشتر در دسته نجات نیافتگان حضور دارند. این مسئله را در شکل
+	  \ref{fig: SurvivalAgeDist}
+	  ~نیز می‌توان دید.\\
+	  همچنین برای کلاس بلیط‌ها، می‌توان فهمید که عمده افراد طبقه 
+	  \lr{Upper(1st)}
+	  در اواخر دهه 30 خود به سر می‌بردند.\\
+	  در طبقه متوسط، افراد در اواخر دهه 20 و در طبقه پایین، افراد در اواسط دهه 20 زندگی‌شان بودند.\\
+	  برداشت دیگر از این شکل این است که بیشتر کودکان تا 15 سال از طبقه بالا و متوسط بودند، برای همین است که برای طبقه پایین داده نویز به شمار میروند.\\
+	  همچنین افراد بالا 40 سال بیشتر مربوط به طبقه بالا و متوسط بوده اند. همانطور که دیده‌شد، این نمودار ارتباطات جالبی را در رابطه با سن افراد و کلاس سفر،‌و یا نجات یافتن نشان میدهد.
+	  
+	  \section*{منابع}
+	  
+	 \begin{enumerate}
+	 	\item \lr{“Exploratory Data Analysis” Wikipedia.org}
+	 	\item \lr{“Titanic - Machine Learning from Disaster”, Data Dictionary, Kaggle.com}
+	 	\item \lr{“Handling missing values in dataset — 9 methods that you need to know”, medium.com}
+	 \end{enumerate}
 \end{document}
