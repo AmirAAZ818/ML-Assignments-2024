@@ -34,31 +34,34 @@
 	\section*{مقدمه}
 	تحلیل اکتشافی داده‌ها، یا
 	\lr{Exploratory Data Analysis (EDA)}،
-	به معنی بررسی داده‌ها به صورت آماری، پاکسازی داده ها و مصورسازی آنهاست، این کار یکی از مهمترین مراحل در یک پروژه می‌باشد.\\
-	در این گزارش، به تحلیل دیتاست مشخصات مسافران کشتی تایتانیک میپردازیم.
+	به معنی بررسی داده‌ها به صورت آماری، پاکسازی داده ها و مصورسازی آنهاست، این کار یکی از مهمترین مراحل در یک پروژه علوم داده می‌باشد.\\
+	در این گزارش، به تحلیل دیتاستی از مشخصات مسافران کشتی تایتانیک میپردازیم.
 	\vspace{10pt}
 	\section{بررسی معنایی دیتاست}
-	دیتاست تایتانیک، متشکل از 11 ستون و 1309 نمونه می‌باشد.\\
+	دیتاست تایتانیک، متشکل از 11 ویژگی و 1309 نمونه می‌باشد.\\
 	در اینجا معنی هریک از ستون‌ها ارائه می‌گردد:‌
 	
 	\begin{center}
 		
-			\begin{tabular}{c|c|c}
-			نگاشت & توضیح & ویژگی\\
-			\hline
-			\hline
-			0 : مرده ، 1 : زنده& نجات یافتن & \column{Survived}\\
-			 1 : درجه یک ، 2 :‌ درجه دو ، 3 : درجه سه & نوع بلیط & \column{Pclass}\\
-			 0 : زن ، 1 : مرد & جنسیت & \column{Sex}\\
-			  & سن به سال،‌ برای کودکان زیر یک سال به صورت اعشاری می‌باشد. & \column{Age}\\
-			  & تعداد همسر، خواهر و برادر سوار بر کشتی & \column{SibSp}\\
-			  & نعداد والدین و فرزندان سوار بر کشتی & \column{ParCh}\\
-			  & شماره بلیط & \column{Ticket}\\
-			  & هزینه بلیط مسافر & \column{Fare}\\
-			  & شماره کابین & \column{Cabin}\\
-			  \lr{C = Cherbourg, Q = Queenstown, S = Southampton}
-			  & بندر محل سوار شدن & \column{Embarked}\\
-			\end{tabular}	
+			\begin{table}[!ht]
+				\begin{tabular}{c|c|c}
+					نگاشت & توضیح & ویژگی\\
+					\hline
+					\hline
+					0 : مرده ، 1 : زنده& نجات یافتن & \column{Survived}\\
+					1 : درجه یک ، 2 :‌ درجه دو ، 3 : درجه سه & نوع بلیط & \column{Pclass}\\
+					0 : زن ، 1 : مرد & جنسیت & \column{Sex}\\
+					& سن به سال،‌ برای کودکان زیر یک سال به صورت اعشاری می‌باشد. & \column{Age}\\
+					& تعداد همسر، خواهر و برادر سوار بر کشتی & \column{SibSp}\\
+					& نعداد والدین و فرزندان سوار بر کشتی & \column{ParCh}\\
+					& شماره بلیط & \column{Ticket}\\
+					& هزینه بلیط مسافر & \column{Fare}\\
+					& شماره کابین & \column{Cabin}\\
+					\lr{C = Cherbourg, Q = Queenstown, S = Southampton}
+					& بندر محل سوار شدن & \column{Embarked}\\
+				\end{tabular}
+				\caption{توضیح ویژگی‌های دیتاست به همراه معنی هر مقدار}
+			\end{table}	
 	\end{center}
 	\vspace{10pt}
 	\section{جمع آوری و تمیز کردن دیتا}
@@ -80,11 +83,28 @@
 	\ref{fig: nullpies}
 	دیده می‌شود، در دیتاست ستون‌های 
 	\column{Age, Fare, Embarked, Cabin}
-	دارای مقادیر هیچ‌مقدار می‌باشند.
-	روش استفاده شده برای هر ستون به شرح زیر است:‌
+	دارای مقادیر هیچ‌مقدار می‌باشند.\\
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[scale=0.5]{./figs/Count-of-missing-and-not-missing data-for-each-column}
+		\caption{
+			فراوانی داده های هیج‌مقدار نسبت به داده‌های دارای مقدار برای هر ویژگی
+		}
+		\label{fig: nullHist}
+	\end{figure}
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[scale=0.3]{./figs/Missing vs Not Missing Rate}
+		\caption{
+			نسبت داده‌های از دست داده شده به داده‌های موجود برای ستون‌های دارای مقادیر هیچ‌مقدار
+		}
+		\label{fig: nullpies}
+	\end{figure}\\
+	
+	برای پر کردن، روش استفاده شده برای هر ستون به شرح زیر است:‌
 	\begin{itemize}
 		\item \column{Cabin}:
-		این ستون در بخش قیل حذف شده است.
+		این ستون در بخش قبل حذف شده است.
 		
 		\item \column{Fare}:‌
 		از آنجایی که اثرگذارترین مشخصه ها در هزینه سفر، بدیهتا نوع بلیط و جنسیت می‌باشد و همچنین تعداد آن کم می‌باشد، داده ها را بر اساس این دو ویژگی گروه‌بندی کرده
@@ -99,11 +119,11 @@
 		 برای هر نمونه که دارای مقدار هیچ‌مقدار در ستون 
 		 \column{Fare}
 		 می‌باشد ایجاد می‌کند، میانگین مناسب خودش را در آن سلول میدهیم.
-		 \begin{figure}[h]
+		 \begin{figure}[!ht]
 		 	\centering
 		 	\includegraphics[scale=0.65]{./figs/Fare Mean for Different Combination}
 		 	\caption{
-		 		میانگین 
+		 		میانگین مقدار ویژگی 
 		 		\column{Fare}
 		 		برای ترکیب‌های یکتای 
 		 		\column{Pclass, Sex}
@@ -126,29 +146,11 @@
 		 استفاده شده است. این متد سعی بر این دارد که این ویژگی را به عنوان تابعی از ویژگی های دیگر در دیتاست ببیند و با برقراری ارتباط بین آن‌ها(به کمک رگرسیون) سعی بر تخمین مقادیر سن با توجه به دیگر ویژگی‌های هر نمونه دارد.
 	\end{itemize}
 	
-	
-	
-	\begin{figure}[!h]
-		\centering
-		\includegraphics[scale=0.65]{./figs/Count-of-missing-and-not-missing data-for-each-column}
-		\caption{
-			فراوانی داده های هیج‌مقدار نسبت به داده‌های دارای مقدار برای هر ویژگی
-		}
-		\label{fig: nullHist}
-	\end{figure}
-	\begin{figure}[!h]
-		\centering
-		\includegraphics[scale=0.3]{./figs/Missing vs Not Missing Rate}
-		\caption{
-			نسبت داده‌های از دست داده شده به داده‌های موجود برای ستون‌های دارای مقادیر هیچ‌مقدار
-		}
-		\label{fig: nullpies}
-	\end{figure}
-	\vspace{10pt}
+	\newpage
 	\section{آنالیزهای آماری و مصورسازی}\label{sec: stats}
 	\subsection{جمعیت}
 	 در اینجا مقدار تخصیص جمعیت به گروه ها‌ی مهم را مشاهده می‌کنیم.
-	\begin{figure}[!h]
+	\begin{figure}[!ht]
 		\centering
 		\includegraphics[scale=0.4]{./figs/Passenger's Population In Different Groups}
 		\caption{
@@ -165,8 +167,8 @@
 	در این بخش بررسی می‌شود که در گروه‌های ویژگی‌های
 	\column{Sex, Pclass}
 	و در کل، فراوانی افراد نجات یافته و نیافته چگونه است.\\
-	همچنین با این استدلال که پورت محل سوار شدن نباید تاثیری در زنده ماندن یا نماندن داشته باشد، از گروه بندی بر اساس این ستون صرف نظر شده است.
-	\begin{figure}[!h]
+	همچنین با این استدلال که پورت محل سوار شدن نباید تاثیری در زنده ماندن یا نماندن داشته باشد، از گروه بندی بر اساس این ستون صرف نظر شده است.\\
+	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.3]{./figs/Survival Rate of the Passengers by Pclass}
 		\caption{
@@ -175,12 +177,11 @@
 			و همچنین در تمامی نمونه‌ها
 		}
 		\label{fig: SurvivalRatePie}
-	\end{figure} 	
-	
+	\end{figure}\\
 	همانطور که در شکل 
 	\ref{fig: SurvivalAgeDist}
-	دیده می‌شود، در ادامه در گروه نجات یافته‌ها و نیافته‌ها، توزیع سن بررسی می‌شود تا کمک کند رابطه بین سن و وضعیت زنده ماندن را بیش از پیش متوجه شویم.
-	\begin{figure}[!h]
+	دیده می‌شود، در ادامه در گروه نجات یافته‌ها و نیافته‌ها، توزیع سن بررسی می‌شود تا کمک کند ترند‌های بین سن و وضعیت زنده ماندن را بیش از پیش متوجه شویم.
+	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.35]{./figs/Age Distribution for Different Survival Status}
 		\caption{
@@ -188,17 +189,16 @@
 			\column{Survived}
 		}
 		\label{fig: SurvivalAgeDist}
-	\end{figure}
-	
+	\end{figure}\\
 	می‌توان از ویژگی‌های 
 	\column{SibSp, ParCh}
 	برای متوجه شدن جمعیت نزدیکان هر مسافر استفاده کرده و رابطه این ویژگی جدید را با ویژگی نجات یافتگی به دست آورد.\\
 	 برای این کار، این دو ستون با بکدیگر جمع شده و ستون جدیدی را به نام 
 	 \column{Family Population}
 	 ایجاد می‌کنند.
-	\begin{figure}[!h]
+	\begin{figure}[!ht]
 		\centering
-		\includegraphics[scale=0.65]{./figs/Survival of Passengers by Family Population}
+		\includegraphics[scale=0.5]{./figs/Survival of Passengers by Family Population}
 		\caption{
 			فروانی جمعیت خانواده هر فرد در گروه‌های ستون
 			\column{Survived}
@@ -207,11 +207,11 @@
 	\end{figure} 
 	
 	\subsection{سن}
-	پراکندگی داده‌ها در این ویژگی بین کل مسافرین و همچنین بر اساس مقادیر ویژگی‌های 
+	پراکندگی داده‌ها با نمودار جعبه‌ای در این ویژگی بین کل مسافرین و همچنین بر اساس مقادیر ویژگی‌های 
 	\column{Survived, Pclass}
-	می‌تواند دید بهتری نسب به داده‌ها به ما نشان دهد. (شکل~\ref{fig: AgeBoxPlot})
+	می‌تواند دید بهتری نسبت به داده‌ها به ما نشان دهد. (شکل~\ref{fig: AgeBoxPlot})
 	
-	\begin{figure}[h]
+	\begin{figure}[!ht]
 		\centering
 		\includegraphics[scale=0.3]{./figs/Box plots of Age Column in Different Groups}
 		\caption{
@@ -222,7 +222,6 @@
 	\end{figure}
 	\vspace{10pt}
 	
-
 	\section*{نتیجه‌گیری}
 	درباره ارتباطات بین ویژگی‌های دیتاست و زنده‌ماندن افراد، می‌توان با تکیه بر بخش 
 	\ref{sec: stats}
@@ -252,7 +251,7 @@
 	  پراکندگی سن با نمودارهای جعبه‌ای در شکل 
 	  \ref{fig: AgeBoxPlot}
 	  بسیار به ما در پیدا کردن میانگین و مد در گروه‌ها کمک می‌کند.
-	  می‌توان برداشت برداشت کرد که افراد با سن بالای 60 سال بیشتر در دسته نجات نیافتگان حضور دارند. این مسئله را در شکل
+	  می‌توان برداشت کرد که افراد با سن بالای 60 سال بیشتر در دسته نجات نیافتگان حضور دارند. این مسئله را در شکل
 	  \ref{fig: SurvivalAgeDist}
 	  ~نیز می‌توان دید.\\
 	  همچنین برای کلاس بلیط‌ها، می‌توان فهمید که عمده افراد طبقه 
