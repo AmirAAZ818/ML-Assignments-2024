@@ -1,6 +1,7 @@
 \documentclass{article}
 \linespread{1.25}
 
+\usepackage{amsmath}
 \usepackage[top = 1cm, right=2cm, left=2cm]{geometry}
 \usepackage{tikz}
 \usepackage{graphicx}
@@ -172,7 +173,7 @@
 			e.g. $P = (2, 9)$
 			\begin{figure}[h!]
 				\centering
-				\begin{tikzpicture}[scale=0.6]
+				\begin{tikzpicture}[scale=0.5]
 					% Draw the grid
 					\draw[step=1cm,dotted,gray,very thin,opacity=0.5] (0,0) grid (10,10);
 					
@@ -202,7 +203,50 @@
 			\end{figure}
 			
 			%Q1-d
-			}
+			\subsection{Now assume you are a teacher, attempting to teach a particular target concept (e.g.,
+				$$
+				3 \le x \le 5 , 2 \le y \le 9
+				$$
+				). What is the smallest number of training examples you can
+				provide so that the CANDIDATE-ELIMINATION algorithm will perfectly learn the
+				target concept?}
+				\subsubsection*{Answer:}
+				I believe we need minimally 6 instances, 2 positive and 4 negative examples learn any hypothesis $h$ \textbf{perfectly}.\\
+				In order to perfectly learn any hypothesis in this space:
+				$$
+				\text{Version Space} = \{h\}
+				$$
+				and for this to happen, $G$ must be equal to $S$:
+				$$
+				G = S 
+				$$
+					\begin{figure}[h!]
+						\centering
+						\begin{tikzpicture}[scale=0.45]
+							% Draw the grid
+							\draw[step=1cm,dotted,gray,very thin,opacity=0.5] (0,0) grid (10,10);
+							
+							% Label the axes
+							\foreach \x in {0,1,...,10} \draw (\x,0) node[below] {\x};
+							\foreach \y in {0,1,...,10} \draw (0,\y) node[left] {\y};
+							
+							% Optionally, draw the x and y axes
+							\draw[thick,->] (0,0) -- (11,0) node[right] {x};
+							\draw[thick,->] (0,0) -- (0,11) node[above] {y};
+							
+							% Making rect
+							\mkrect[pink]{3}{2}{5}{9}
+										
+							% Making points
+							\ap{3}{9}{+}
+							\ap{5}{2}{+}
+							\ap{6}{6}{-}
+							\ap{2}{6}{-}
+							\ap{4}{1}{-}
+							\ap{4}{10}{-}
+							
+						\end{tikzpicture}
+					\end{figure}	
 	\end{latin}
 	
 \end{document}
