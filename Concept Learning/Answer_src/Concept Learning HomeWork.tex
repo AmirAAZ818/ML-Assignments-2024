@@ -2,6 +2,7 @@
 \linespread{1.25}
 
 \usepackage{amsmath}
+\usepackage{MnSymbol}
 \usepackage[top = 1cm, right=2cm, left=2cm]{geometry}
 \usepackage{tikz}
 \usepackage{graphicx}
@@ -34,6 +35,7 @@
 \newcommand{\mkrect}[5][black]{% #1: optional color, #2: x1, #3: y1, #4: x2, #5: y2
 	\draw[#1,very thick] (#2,#3) rectangle (#4,#5);
 }
+\newcommand{\mksample}[3]{$$ #3 \hspace{2pt} \llangle \text{#1} \rangle \langle \text{#2} \rrangle $$}
 
 \begin{document}
 	\maketitle
@@ -247,6 +249,25 @@
 							
 						\end{tikzpicture}
 					\end{figure}	
+					
+		%Q2
+		\section{Consider the following sequence of positive and negative training examples
+			describing the concept "pairs of people who live in the same house." Each training
+			example describes an ordered pair of people, with each person described by their
+			sex, hair color (black, brown, or blonde), height (tall, medium, or short), and
+			nationality (US,French, German, Irish, Indian, Japanese, or Portuguese)
+			\mksample{male brown tall US}{female black short US}{+}
+			\mksample{male brown short French}{female black short US}{+}
+			\mksample{female brown tall German}{female black short Indian}{-}
+			\mksample{male brown tall Irish}{female brown short Irish}{+}\\
+			Consider a hypothesis space defined over these instances, in which each hypothesis
+			is represented by a pair of 4-tuples, and where each attribute constraint may be a
+			specific value, "?" or "$\emptyset$" just as in the EnjoySport hypothesis representation.
+			}
+		\subsection{Provide a hand trace of the CANDIDATE-ELIMINATION algorithm learning from
+			the above training examples and hypothesis language. In particular, show the
+			specific and general boundaries of the version space after it has processed the first
+			training example, then the second training example, etc.}
+			
 	\end{latin}
-	
 \end{document}
