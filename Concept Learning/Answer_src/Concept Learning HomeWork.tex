@@ -35,7 +35,7 @@
 \newcommand{\mkrect}[5][black]{% #1: optional color, #2: x1, #3: y1, #4: x2, #5: y2
 	\draw[#1,very thick] (#2,#3) rectangle (#4,#5);
 }
-\newcommand{\mksample}[3]{$$ #3 \hspace{2pt} \llangle \text{#1} \rangle \langle \text{#2} \rrangle $$}
+\newcommand{\mksample}[3]{#3 \hspace{2pt} \llangle \text{#1} \rangle \langle \text{#2} \rrangle}
 
 \begin{document}
 	\maketitle
@@ -256,10 +256,10 @@
 			example describes an ordered pair of people, with each person described by their
 			sex, hair color (black, brown, or blonde), height (tall, medium, or short), and
 			nationality (US,French, German, Irish, Indian, Japanese, or Portuguese)
-			\mksample{male brown tall US}{female black short US}{+}
-			\mksample{male brown short French}{female black short US}{+}
-			\mksample{female brown tall German}{female black short Indian}{-}
-			\mksample{male brown tall Irish}{female brown short Irish}{+}\\
+			$$ \mksample{male brown tall US}{female black short US}{+} $$
+			$$ \mksample{male brown short French}{female black short US}{+} $$
+			$$ \mksample{female brown tall German}{female black short Indian}{-} $$
+			$$ \mksample{male brown tall Irish}{female brown short Irish}{+} $$
 			Consider a hypothesis space defined over these instances, in which each hypothesis
 			is represented by a pair of 4-tuples, and where each attribute constraint may be a
 			specific value, "?" or "$\emptyset$" just as in the EnjoySport hypothesis representation.
@@ -268,6 +268,21 @@
 			the above training examples and hypothesis language. In particular, show the
 			specific and general boundaries of the version space after it has processed the first
 			training example, then the second training example, etc.}
-			
+			\subsubsection*{Answer:}
+			\textit{Initialization}:
+			$$ G_0 = \{\mksample{?, ?, ?, ?}{?, ?, ?, ?}{} \} $$
+			$$ S_0 = \{\mksample{$\emptyset$, $\emptyset$, $\emptyset$, $\emptyset$}{$\emptyset$, $\emptyset$, $\emptyset$, $\emptyset$}{} \} $$
+			\textit{Sample 1}:
+			$$ G_1 = G_0$$
+			$$ S_1 = \{\mksample{male, brown, tall, US}{female, black, short, US}{}\} $$
+			\textit{Sample 2}:
+			$$ G_2 = G_1$$
+			$$ S_2 = \{\mksample{male, brown, ?, ?}{female, black, short, US}{}\} $$
+			\textit{Sample 3}:
+			$$ G_3 = \{\mksample{male, ?, ?, ?}{?, ?, ?, ?}{}, \mksample{?, ?, ?, ?}{?, ?, ?, US}{}\} $$
+			$$ S_3 = S_2 $$
+			\textit{Sample 4}:
+			$$ G_3 = \{\mksample{male, ?, ?, ?}{?, ?, ?, ?}{}\} $$
+			$$ S_3 = \{\mksample{male, brown, ?, ?}{female, ?, short, ?}{}\} $$
 	\end{latin}
 \end{document}
