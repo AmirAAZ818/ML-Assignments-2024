@@ -1,0 +1,82 @@
+\documentclass{article}
+\linespread{1.25}
+
+\usepackage[top = 1cm, right=2cm, left=2cm]{geometry}
+\usepackage{sectsty}
+\usepackage{amsmath}
+
+\usepackage{graphicx}
+\usepackage{xepersian}
+\settextfont{B Nazanin}
+\setlatinmonofont{CMU Serif}
+%\setlatinmonofont{Times New Roman}
+\setlatintextfont{Times New Roman}
+
+% Set Latin Modern font for the bullets in itemizea
+\newfontfamily\latinbullet{Latin Modern Roman}
+\sectionfont{\fontsize{12}{15}\selectfont}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\title{پاسخ تکلیف 
+	\lr{Decision Tree (ID3)}
+}
+\author{درس یادگیری ماشین}
+\date{
+	امیرحسین ابوالحسنی\\
+	400405003
+	}
+	
+	
+% Commands
+\newcommand{\column}[1]{\lr{\textit{#1}}}
+\renewcommand{\labelitemi}{{\latinbullet\textbullet}} % Use the bullet from Latin Modern font
+
+\begin{document}
+	\maketitle
+	
+	\begin{latin}
+		\section{Suppose there is an attribute, "A," that consists of random values, and these
+			values do not have any correlation with the class labels. Additionally, assume that
+			"A" has a sufficient number of distinct values such that no two instances in the
+			training dataset share the same value for "A." What would be the outcome if a
+			decision tree is built using this attribute? What challenges or issues might arise in
+			this scenario?}
+	\end{latin}
+	\noindent
+	\subsection*{پاسخ}
+	\subsubsection*{قسمت اول}
+	با توجه به الگوریتم 
+	\lr{ID3}،
+	در ابتدا 
+	\lr{information gain}
+	ناشی از هر ویژگی را سنجیده و آن ویژگی که بیشترین 
+	\lr{gain}
+	را دارد انتخاب می‌کنیم\\
+	(تعداد کلاس‌های هدف = \lr{k}):
+	\[
+	Gain(S, A) = Entropy(S) - \sum_{v \in A} \frac{| S_v |}{| S |}Entropy(S_v)
+	\] 
+	\[
+	Entropy(S_v) = -\sum_{v} p_v\log (p_v) = P(S_v = 0) \log P(S_v = 0) + P(S_v = 1) \log P(S_v = 1) + \dots‌+ P(S_v = k) \log p(S_v = k)
+	\]
+	به علت یکتایی این ویژگی(کلید اصلی بودن) برای هر نمونه، همه ترم‌های $P(S_v = l) \log P(S_v = l)$ برابر با صفر می‌شود.  زیرا 
+	\[
+	P(S_v = l) = 0
+	\]
+	یا
+	\[
+	P(S_v = l) = 1
+	\]
+	 در نتیجه یکی از مضرب ها 0 خواهد شد و کل ترم‌ را 0 خواهد کرد. بدین صورت است که نتیجه می‌گیریم:
+	\[
+	Entropy(S_v) = 0
+	\]
+	و این ویژگی برای ریشه انتخاب می‌گردد:
+	\[
+	\argmax ~ \{Gain(S_v) |\forall A \in \text{\lr{Header}}\} = A
+	\]
+	در نتیجه این کار، ارتفاع درخت 1 شده و به تعداد مقادیر ویژگی 
+	\lr{A}،
+شاخه خواهیم داشت.
+	
+\end{document}
