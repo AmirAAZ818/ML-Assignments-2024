@@ -6,7 +6,8 @@
 \usepackage[section]{placeins}
 \usepackage[hidelinks, urlcolor=blue]{hyperref}
 \usepackage{float} % for image position in exatly where you want
-\usepackage[perpage]{footmisc}
+\usepackage[perpage, stable]{footmisc}
+\usepackage{interval}
 
 \usepackage{xepersian}
 \settextfont{B Nazanin}
@@ -239,8 +240,36 @@
 		\label{fig: salary grouped}
 	\end{figure}
 	\FloatBarrier
-	\section{\lr{Feature Selection}}
-	سلام
+	\subsection{دسته بندی ویژگی‌ها}
+	برای کار با درخت تصمیم نیاز به این است که داده‌ها گسسته باشند. با تعیین بازه‌هایی، ویژگی‌های 
+	\lr{Age, Hours per Week, Capital Gain}
+	گسسته سازی شدند.\\
+	در جدول 
+	مقادیر هر ویژگی و بازه‌های گسسته‌سازی نشان داده شده است.
+	\begin{table}
+		\centering
+		\begin{minipage}[t]{0.3\textwidth}
+			\centering
+			\begin{tabular}{|c|c|c|}
+				\hline
+				\[
+				\interval{0}{30}
+				\] &\[
+				\interval[right]{31}{50}
+				\]& \[
+				\interval[right]{51}{\infty}
+				\]\\
+				\hline
+				1 - 30 & 31 - 50 & \lr{Over 50}
+			\end{tabular}
+		\end{minipage}
+	\end{table}
+	
+	
+	\section{
+		انتخاب ویژگی
+		\footnote{\lr{Feature Selection}}
+		‌}
 	
 	\section{آموزش مدل}
 	
