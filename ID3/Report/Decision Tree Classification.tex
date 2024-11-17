@@ -7,7 +7,7 @@
 \usepackage[hidelinks, urlcolor=blue]{hyperref}
 \usepackage{float} % for image position in exatly where you want
 \usepackage[perpage, stable]{footmisc}
-\usepackage{interval}
+\usepackage{amsmath}
 
 \usepackage{xepersian}
 \settextfont{B Nazanin}
@@ -244,39 +244,179 @@
 	برای کار با درخت تصمیم نیاز به این است که داده‌ها گسسته باشند. با تعیین بازه‌هایی، ویژگی‌های 
 	\lr{Age, Hours per Week, Capital Gain}
 	گسسته سازی شدند.\\
-	در جدول 
+	در جداول
+	\ref{tbl: age}
+	و
+	\ref{tbl: hours/week}
+	و
+	\ref{tbl: capital gain}
 	مقادیر هر ویژگی و بازه‌های گسسته‌سازی نشان داده شده است.
-	\begin{table}
+	\begin{table}[H]
 		\centering
-		\begin{minipage}[t]{0.3\textwidth}
-			\centering
 			\begin{tabular}{|c|c|c|}
 				\hline
-				\[
-				\interval{0}{30}
-				\] &\[
-				\interval[right]{31}{50}
-				\]& \[
-				\interval[right]{51}{\infty}
-				\]\\
+				$(50, \infty)$ & $(30, 50]$ & $(0, 30]$\\
 				\hline
-				1 - 30 & 31 - 50 & \lr{Over 50}
+				\lr{Over 50} & 31 - 50 & 1 - 30\\
+				\hline
 			\end{tabular}
-		\end{minipage}
+			\caption{گسسته سازی 
+				\lr{Age}
+			}
+			\label{tbl: age}
 	\end{table}
-	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			$(60, \infty)$ & $(40, 60]$ & $(20, 40]$ & $(0, 20]$\\
+			\hline
+			\lr{Very High} & \lr{High} & \lr{Average} & \lr{Low}\\
+			\hline
+		\end{tabular}
+		\caption{گسسته سازی 
+			\lr{$\frac{\text{Hours}}{\text{Week}}$}
+		}
+		\label{tbl: hours/week}
+	\end{table}
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		$(15000, \infty)$ & $(0, 15000]$\\
+		\hline
+		\lr{>15K} & \lr{<=15K}\\
+		\hline
+	\end{tabular}
+	\caption{گسسته سازی 
+		\lr{Capital Gain}
+	}
+	\label{tbl: capital gain}
+\end{table}	
+
+\subsection{حذف دستی برخی ویژگی‌ها}
+در اینحا به علل حذف سه ویژگی 
+\lr{fnlwgt}
+و
+\lr{education-num}
+و
+\lr{capital-loss}
+اشاره میگردد.
+\begin{itemize}
+	\item \lr{education-num}:
+	 این ویژگی بدین علت که با ویژگی
+	 \lr{Education}
+	 یکی است. باعث ایجاد افزونگی می‌شود.
+	\item \lr{capital-loss}:
+	با نگاه به نمودار 
+	\ref{fig: captial loss}
+	می‌توان استنتاج کرد که حجم ضرری که افراد متحمل شدند آنقدر زیاد نیست که در درآمد سالانه آنها تاثیر بگذارد، اما بالعکس، حچم \lr{capital gain} با توجه به اینکه در یکسری افراد، خیلی بالاست، قابل تاثیر گذاری در درآمد سالانه فرد می‌باشد.
+\end{itemize}
 	
 	\section{
 		انتخاب ویژگی
 		\footnote{\lr{Feature Selection}}
 		‌}
-	
-	\section{آموزش مدل}
+	برای این بخش، از معیاری به نام آزمون کای-دو
+	\footnote{\lr{Chi Square Test}}
+	برای انتخاب مجموعه از از ویژگی‌ها که بیشترین ارتباط را با متغیر هدف دارند، استفاده شده است.\\
+	آزمون کای-دو یکی از روش‌های آماری پرکاربرد است که برای تحلیل داده‌های کیفی و بررسی روابط بین متغیرهای گسسته استفاده می‌شود. این آزمون به طور گسترده در حوزه‌های مختلف از جمله یادگیری ماشین، تحلیل داده و تحقیقات علمی مورد استفاده قرار می‌گیرد.
+	در زمینه انتخاب ویژگی در درخت تصمیم و الگوریتم
+	 \lr{ID3}
+	 ، آزمون کای-دو برای اندازه‌گیری میزان وابستگی بین ویژگی‌ها و متغیر هدف استفاده می‌شود. این آزمون به ما کمک می‌کند تا تشخیص دهیم کدام ویژگی‌ها ارتباط قوی‌تری با متغیر هدف دارند.
+	 \footnote{
+	 	توضیحات مربوط به آزمون کای-دو توسط مدل
+	 	\lr{Claude}
+	 	نوشته شده است.
+	 }\\
+	 فرمول آزمون-کای-دو به صورت زیر است:
+	 \[
+	 \chi^{2} = \sum \frac{(O_i - E_i)^2}{E_i}
+	 \]
+	\section{آموزش مدل}\label{sec: train}
+	قبل از آموزش مدل، با تغییری در کد تابع 
+	\lr{id3}
+	قابلیت هرس کرن بر اساس یک آستانه برای 
+	\lr{Information Gain}
+	را در تابع ایجاد کردیم.‌ این به مدل کمک می‌کند تا از بیش برازش
+	\footnote{\lr{Overfit}}
+	جلوگیری کند. همچنین باعث کم شدن عمق درخت می‌شود که در نهایت به پیچیدگی حافظه درخت نیز کمک خواهد کرد.\\
+	\subsection{تقسیم دیتاست}
+	برای اینکه فاز 
+	\lr{Evaluation}
+	عادلانه باشد، دیتاست به دو بخش 
+	\lr{Train ( $80\%$ )}
+	و
+	\lr{Test ( $20\%$ )}
+	تقسیم می‌شود.\\
+	\subsection{آموزش مدل روی همه ویژگی‌ها}
+	برای داشتن یک پایه برای مقایسه، ابتدا درخت را روی همه ویژگی‌ها آموزش می‌دهیم. همچنین برای دیدن تاثیر تغییر آستانه
+	\lr{Information Gain}
+	،(و به نوعی تاثیر بیش‌برازش در دقت و 
+	\lr{F1 Score}
+	) در هر مرحله این مقدار را از 0 به 2.0 با قدم‌های 02.0 برده شده است.(شکل 
+	\ref{fig: ig all train}
+	و
+	\ref{fig: ig all train2}
+	)
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{figs/all_feature_train1}
+		\caption{
+			نمودار‌های 
+			\lr{Accuracy, F1 Score, Precision \& Recall}
+			با توجه به مقدار آستانه
+			\lr{Information Gain}
+		}
+		\label{fig: ig all train}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{figs/all_feature_train2}
+		\caption{
+			نمودار‌های 
+			\lr{Inference Time}
+			و ارتفاع درخت،
+			با توجه به مقدار آستانه
+			\lr{Information Gain}
+		}
+		\label{fig: ig all train2}
+	\end{figure}
+	\subsection{آموزش مدل روی 4 تا بهترین ویژگی }
 	
 	\section{نتایج}
-	
+	 نمره‌های بهترین مدل‌های بخش 
+	\lr{\ref{sec: train}}
+	در جدول 
+	\ref{table: comp scores}
+	جمع آوری شده است.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+			\hline
+			متد‌ استفاده شده &‌ آستانه \lr{IG} & ارتفاع &($\times 10^{-5}$) زمان استنتاج  &  دقت &
+			\lr{Precision} &
+			\lr{Recall} &
+			\lr{F1 Score}\\
+			\hline
+			\hline
+			خالی & 12.0 & 7 & 85.0 & 81.0 & 73.0 & 40.0 & 52.0\\
+			\hline
+			خالی & 12.0 & 7 & 85.0 & 81.0 & 73.0 & 40.0 & 52.0\\
+			\hline
+			خالی & 12.0 & 7 & 85.0 & 81.0 & 73.0 & 40.0 & 52.0\\
+			\hline
+		\end{tabular}
+		\caption{جدول مقایسه نمره‌های بهترین مدل‌ها}
+		\label{table: comp scores}
+	\end{table}
 	\section{نتیجه گیری}
 	
+	\section{
+		مصورسازی دیتاست با
+		\lr{PCA}
+		\footnote{\lr{Principle Component Analysis}}
+	}
 	\section{مراجع}
 	
 	
