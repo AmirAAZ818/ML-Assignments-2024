@@ -8,6 +8,7 @@
 \usepackage{float} % for image position in exatly where you want
 \usepackage[perpage, stable]{footmisc}
 \usepackage{amsmath}
+\usepackage{titling}
 
 \usepackage{xepersian}
 \settextfont{B Nazanin}
@@ -20,23 +21,48 @@
 
 
 
-\title{گزارش تکلیف 
-	\lr{ID3 Algorithm}
-}
-\author{درس یادگیری ماشین}
-\date{
-	امیرحسین ابوالحسنی\\
-	400405003
-}
 
 
 % Commands
 \newcommand{\column}[1]{\lr{\textit{#1}}}
 \renewcommand{\labelitemi}{{\latinbullet\textbullet}} % Use the bullet from Latin Modern font
 
+% Custom title page setup
+\makeatletter
+\def\maketitle{
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{2cm}
+			
+			{\Large\bfseries درس یادگیری ماشین\par}
+			\vspace{2cm}
+			
+			{\Huge\bfseries گزارش تکلیف
+				 \lr{Decision Tree}\par}
+			\vspace{3cm}
+			
+			{\large\bfseries استاد درس:\par}
+			{\large دکتر افتخاری\par}
+			\vspace{1.5cm}
+			
+			{\large\bfseries نگارش:\par}
+			{\large امیرحسین ابوالحسنی\par}
+			{\large شماره دانشجویی: 400405003\par}
+			\vspace{2cm}
+			
+			\vfill  % pushes the date to bottom
+			
+			{\large\bfseries پاییز \lr{1403}}
+			
+		\end{center}
+	\end{titlepage}
+	\setcounter{page}{1}
+}
+\makeatother
+
+
 \begin{document}
-	\maketitle
-	\newpage
+	\maketitle	
 	\tableofcontents
 	\newpage
 	\section{مقدمه}
@@ -95,13 +121,13 @@
 		\caption{ویژگی‌های دیتاست \lr{salary}}
 	\end{table}
 	\subsection{مقادیر هیچ مقدار}
-	خوشبختانه این دیتاست داری هیج سلول گم شده‌ای نمی‌باشد.
+	خوشبختانه این دیتاست داری هیج مقدار گم شده‌ای نمی‌باشد.
 	\newpage
 	\subsection{نمودار‌ها}
 	توزیع برخی ویژگی‌ها در دیتاست برسی شده است.\\
 	همانطور که در نمودار 
 	\ref{fig: sex dist}
-	می‌توان دید، که جمعیت مردان دو برابر جمعیت زنان در این دیتاست می باشد.
+	می‌توان دید، جمعیت مردان دو برابر جمعیت زنان در این دیتاست می باشد.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.5]{figs/sex_dist}
@@ -310,7 +336,7 @@
 	\item \lr{capital-loss}:
 	با نگاه به نمودار 
 	\ref{fig: captial loss}
-	می‌توان استنتاج کرد که حجم ضرری که افراد متحمل شدند آنقدر زیاد نیست که در درآمد سالانه آنها تاثیر بگذارد، اما بالعکس، حچم \lr{capital gain} با توجه به اینکه در یکسری افراد، خیلی بالاست، قابل تاثیر گذاری در درآمد سالانه فرد می‌باشد.
+	می‌توان استنتاج کرد که حجم ضرری که افراد متحمل شدند آنقدر زیاد نیست که در درآمد سالانه آنها تاثیر بگذارد، اما بالعکس، حجم \lr{capital gain} با توجه به اینکه در یکسری افراد، خیلی بالاست، قابل تاثیر گذاری در درآمد سالانه فرد می‌باشد.
 \end{itemize}
 	
 	\section{
@@ -421,7 +447,9 @@
 		\label{fig: ig all train2}
 	\end{figure}
 	\subsection{آموزش مدل روی 4 ویژگی}
-	پس از اینکه با استفاده از معیار $\chi$،‌ویژگی‌ها را طبقه‌بندی کردیم. در این بخش چهار تا از بهترین ویژگی‌ها را انتخاب کرده و با آنها درخت تصمیم جدید را تشکیل می‌دهیم. در شکل 
+	پس از اینکه با استفاده از معیار 
+	$\chi^2$
+	،‌ویژگی‌ها را طبقه‌بندی کردیم. در این بخش چهار تا از بهترین ویژگی‌ها را انتخاب کرده و با آنها درخت تصمیم جدید را تشکیل می‌دهیم. در شکل 
 	\ref{fig: ig 4 train}
 	و
 	\ref{fig: ig 4 train2}
@@ -498,23 +526,111 @@
 			\lr{F1 Score}\\
 			\hline
 			\hline
-			معمولی & 12.0 & 7 & 8.0 & 81.0 & 73.0 & 40.0 & 52.0\\
+			- & 12.0 & 7 & 8.0 & 81.0 & 73.0 & 40.0 & 52.0\\
 			\hline
 			$\chi^2$ - بهترین 8 تا &1.0
 			& 6 & 88.0 & 81.0 & 72.0 & 41.0 & 53.0\\
 			\hline
 			$\chi^2$ - بهترین 4 تا &
-			 0.0 & 4 & 2 & 81.0 & 73.0 & 13.0 & 22.0\\
+			 0 & 4 & 2 & 77.0 & 74.0 & 13.0 & 22.0\\
 			\hline
 		\end{tabular}
 		\caption{جدول مقایسه نمره‌های بهترین مدل‌ها}
 		\label{table: comp scores}
 	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{figs/confall}
+		\caption{
+			ماترس سردرگمی
+			 درخت معمولی
+		}
+		\label{fig: conf all}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{figs/conf8}
+		\caption{
+			ماترس سردرگمی
+			درخت ساخته شده با 8 ویژگی
+		}
+		\label{fig: conf 8}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{figs/conf4}
+		\caption{
+			ماترس سردرگمی
+			درخت ساخته شده با 4 ویژگی
+		}
+		\label{fig: conf 4}
+	\end{figure}
 	\section{نتیجه گیری}
+	همانطور که در جدول 
+	\ref{table: comp scores}
+	دیده می‌شود، در این دیتاست دقت با کمتر شدن تعداد فیچر‌ها بعد از 8 ویژگی افت می‌کند، همچنین 
+	\lr{F1 Score}
+	ابتدا سیر صعودی گرفته اما در 4 ویژگی به شدت کاهش پیدا می‌کند.\\
+	می‌توان از جدول 
+	\ref{table: comp scores}
+	نتیجه گرفت مدلی که با 8 ویژگی اول جدول
+	\ref{tbl: chi2 vals}
+	و با آستانه 
+	\lr{IG}
+	برابر با 1.0 آموزش ببیند، بهترین عملکرد را خواهد داشت.\\
+	یکی از تفسیر‌ها برای مقدار کم 
+	\lr{Recall}
+	می‌تواند بالانس نبودن داده‌ها باشد. فرمول 
+	\lr{Recall}
+	بدین صورت است:
+	\[
+												Recall = \frac{TP}{TP + FN}
+	\]
+	زمانی که داده‌ها بالانس نباشد و کلاس میینور کلاس مثبت باشد، بایاس روی مقادیر کلاس منفی اتفاق می افتد و باعث می‌شود خیلی از نمونه‌ها منفی گزارش شوند، حتی اگر متعلق به کلاس مثبت باشند.(شکل
+	\ref{fig: conf 4}
+	و
+	\ref{fig: conf 8}
+	و
+	\ref{fig: conf all}
+	) این باعث می‌شود مقدار $False~Negative$ بالا برود و با این اتفاق، 
+	مقدار 
+	\lr{Recall}
+	کم بشود.
 	\section{
-		مصورسازی دیتاست با
+    کنجکاوی: مصورسازی دیتاست با
 		\lr{PCA}
 		\footnote{\lr{Principle Component Analysis}}
 	}
-	\section{مراجع}	
+	هرچند این مورد در توضیحات تکلیف ذکر نشده است اما حقیقتا مبحث \textit{کاهش ابعاد}
+	\footnote{\lr{Dimensionality Reduction}}
+	همیشه باعث شگفتی است!\\
+	 در شکل 
+	 \ref{fig: pca 2}
+	 دیده می‌شود که اگر 
+	 \lr{PCA}
+	 با دو مولفه اصلی انجام شود، جز معدودی از داده‌های کلاس مثبت، قابل جداسازی از داده‌های کلاس منفی نیستند.\\
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{figs/pca2}
+		\caption{
+			نمودار پراکندگی داده‌ها پس از انجام
+			\lr{PCA}
+			با دو مولفه
+		}
+		\label{fig: pca 2}
+	\end{figure} 
+	اما با 3 مولفه، می‌توان در شکل
+	\ref{fig: pca 3}
+	 دید که جداپذیری داده‌های هر کلاس بالاتر میرود، انگار که وجه دیگری از داده به نمایش گذاشته می‌شود.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{figs/pca3}
+		\caption{
+			نمودار پراکندگی داده‌ها پس از انجام
+			\lr{PCA}
+			با سه مولفه
+		}
+		\label{fig: pca 3}
+	\end{figure} 
 \end{document}
