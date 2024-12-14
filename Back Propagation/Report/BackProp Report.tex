@@ -1,0 +1,118 @@
+\documentclass[11pt]{article}
+\linespread{1.25}
+
+\usepackage[top = 2cm, right=2cm, left=2cm]{geometry}
+\usepackage{graphicx}
+
+\usepackage[section]{placeins}
+\usepackage[hidelinks, urlcolor=blue]{hyperref}
+\usepackage{float} % for image position in exatly where you want
+\usepackage[perpage, stable]{footmisc}
+\usepackage{amsmath}
+\usepackage{titling}
+
+\usepackage{xepersian}
+\settextfont{B Nazanin}
+\setlatinmonofont{CMU Serif}
+%\setlatinmonofont{Times New Roman}
+\setlatintextfont{Times New Roman}
+
+% Set Latin Modern font for the bullets in itemizea
+\newfontfamily\latinbullet{Latin Modern Roman}
+
+
+
+
+
+% Commands
+\newcommand{\column}[1]{\lr{\textit{#1}}}
+\renewcommand{\labelitemi}{{\latinbullet\textbullet}} % Use the bullet from Latin Modern font
+
+% Custom title page setup
+\makeatletter
+\def\maketitle{
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{2cm}
+			
+			{\Large\bfseries درس یادگیری ماشین\par}
+			\vspace{2cm}
+			
+			{\Huge\bfseries گزارش تکلیف
+				\lr{Backpropagation}\par}
+			\vspace{3cm}
+			
+			{\large\bfseries استاد درس:\par}
+			{\large دکتر افتخاری\par}
+			\vspace{1.5cm}
+			
+			{\large\bfseries نگارش:\par}
+			{\large امیرحسین ابوالحسنی\par}
+			{\large شماره دانشجویی: 400405003\par}
+			\vspace{2cm}
+			
+			\vfill  % pushes the date to bottom
+			
+			{\large\bfseries پاییز \lr{1403}}
+			
+		\end{center}
+	\end{titlepage}
+	\setcounter{page}{1}
+}
+\makeatother
+
+
+\begin{document}
+	\maketitle	
+	\tableofcontents
+	\newpage
+	\section{مقدمه}
+	الگوریتم پس انتشار خطا
+	\footnote{\lr{Back Propagation}}،
+	الگوریتمی برای یادگیری با نظرات در شبکه‌های عصبی با استفاده از گرادیان کاهشی است. در این روش، برای یک شبکه عصبی مصنوعی و تابع خطای مشخص،‌گرادیان تابع خطا نسبت به وزن‌های شبکه عصبی محاسبه می‌‌شود.\\
+	در این تکلیف به پیاده سازی بلوک‌های سازنده یک شبکه عصبی پراخته می‌شود، و در هر بلوک، متد‌های مورد نیاز برای انجام الگوریتم پس انتشار خطا پیاده سازی می شود.
+	\section{پیاده سازی لایه خطی}
+	هر لایه از شبکه عصبی متشکل از تعدادی نورون می باشد که تعداد بعد ورودی را به تعداد بعد خروجی نگاشت می کند. پارامتر‌های مهمی که باید برای هر لایه ذخیره شود وزن‌های لایه‌ و بایاس لایه می‌باشد. همچنین گرادیان‌ها نسبت به وزن و بایاس نیز باید نگه داشته شود.\\
+	\section{پیاده سازی توابع فعال‌سازی}
+	\subsection{سیگموید}
+	تابع سیگمویید به فرمول :
+	\[ f(x) = \frac{1}{1 + e^{-x}} \]
+	ورودی را به بازه $[1, 0]$ نگاشت می‌کند و برای انحام دسته‌یندی دو کلاسه مورد استفاده قرار می‌گیرد.\\
+	یکی دیگر از دلایل استفاده از سیگمویید، سادگی در محاسبه مشتق آن است.
+	\[ f'(x) = f(x)\cdot (1 - f(x)) \]
+	\subsection{واحد یک‌سو شده خطی}
+	تابع 
+	\lr{ReLU}
+	با فرمول 
+	\[ f(x) = \max (0, x )\]
+	سعی در ایجاد روابط غیر خطی در شبکه دارد.
+	همچنین مشتق این تابع به سادگی محاسبه می‌گردد:
+	$$ f'(x) = \begin{cases} 1 & \text{\lr{if} } x > 0 \\ 0 & \text{\lr{otherwise}} \end{cases} $$
+	\subsection{\lr{Softmax}}
+	\section{پیاده سازی توابع هزینه}
+	\section{آموزش شبکه عصبی}
+	\section{ارزیابی و نتایج}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+\end{document}
