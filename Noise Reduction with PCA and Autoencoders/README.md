@@ -1,4 +1,4 @@
-# Noise Reduction Analysis Report README
+# Noise Reduction with PCA and Autoencoders
 
 ## Overview
 
