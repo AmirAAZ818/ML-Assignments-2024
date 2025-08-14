@@ -1,37 +1,25 @@
 \documentclass[12pt]{article}
 \linespread{1.15}
 
-\usepackage[top = 1.5cm, right=2cm, left=2cm]{geometry}
+\usepackage[top=1.5cm, right=2cm, left=2cm]{geometry}
 \usepackage{graphicx}
-
 \usepackage[section]{placeins}
 \usepackage[hidelinks, urlcolor=blue]{hyperref}
-\usepackage{float} % for image position in exatly where you want
+\usepackage{float}
 \usepackage[perpage, stable]{footmisc}
 \usepackage{amsmath}
 \usepackage{titling}
-
-
-\usepackage{xepersian}
-\settextfont{B Nazanin}
-\setlatinmonofont{CMU Serif}
-%\setlatinmonofont{Times New Roman}
-\setlatintextfont{Times New Roman}
-
-
-% Set Latin Modern font for the bullets in itemizea
-\newfontfamily\latinbullet{Latin Modern Roman}
-
-
-
+\usepackage{tabularx}
+\usepackage{booktabs}
 
 
 % Commands
-\newcommand{\column}[1]{\lr{\textit{#1}}}
-\renewcommand{\labelitemi}{{\latinbullet\textbullet}} % Use the bullet from Latin Modern font
-\newcommand{\fm}{\lr{Fashion MNIST}}
-\newcommand{\pca}{\lr{PCA}}
-\renewcommand{\ae}{\lr{Autoencoder}}
+\newcommand{\column}[1]{\textit{#1}}
+
+\newcommand{\fm}{Fashion MNIST}
+\newcommand{\pca}{PCA}
+\renewcommand{\ae}{Autoencoder}
+
 % Custom title page setup
 \makeatletter
 \def\maketitle{
@@ -39,253 +27,180 @@
 		\begin{center}
 			\vspace*{2cm}
 			
-			{\Large\bfseries درس یادگیری ماشین\par}
+			{\Large\bfseries Machine Learning Course\par}
 			\vspace{2cm}
 			
-			{\Huge\bfseries گزارش تکلیف\\
-				\lr{Noise Reduction Using PCA and Autoencoders}\par}
+			{\Huge\bfseries Noise Reduction Using PCA and Autoencoder Assignment Report\par}
 			\vspace{3cm}
 			
-			{\large\bfseries استاد درس:\par}
-			{\large دکتر افتخاری\par}
+			{\large\bfseries Professor:\par}
+			{\large Dr. Mahdi Eftekhari\par}
 			\vspace{1.5cm}
 			
-			{\large\bfseries نگارش:\par}
-			{\large امیرحسین ابوالحسنی\par}
-			{\large شماره دانشجویی: 400405003\par}
+			{\large\bfseries Author:\par}
+			{\large Amirhossein Abolhassani\par}
 			\vspace{2cm}
 			
 			\vfill  % pushes the date to bottom
 			
-			{\large\bfseries پاییز \lr{1403}}
-		
+			{\large\bfseries Fall 2024}
+			
 		\end{center}
 	\end{titlepage}
 	\setcounter{page}{1}
 }
 \makeatother
 
-
 \begin{document}
 	\maketitle
 	\tableofcontents
 	\newpage
-	\section{مقدمه}
-	یکی از تسک‌هایی که در حوزه پردازش تصویر مطرح می‌شود، کاهش نویز
-	\footnote{\lr{Noise Reduction}}
-	 می‌باشد. در این تسک، سعی بر این می‌شود که با الگوریتم‌ها و راه‌حل‌های متفاوت، نویز تصویر کمتر شود. دو مورد از تکنیک‌های ابتدایی برای این تسک، در این تکلیف بررسی شده و روی دیتاست 
-	 \lr{Fashion MNIST}
-	 تست می‌شوند
-	  که عبارتند از:
+	\section{Introduction}
+	One of the tasks in image processing is Noise Reduction. This task aims to reduce image noise using various algorithms and techniques. Two fundamental techniques are explored in this assignment and tested on the Fashion MNIST dataset:
 	\begin{itemize}
-		\item تحلیل مولفه های اصلی
-		\footnote{\lr{Principal Component Analysis (PCA)}}
-		\item خود رمز گذار
-		\footnote{\lr{Autoencoder}}
+		\item Principal Component Analysis (PCA)
+		\item Autoencoder
 	\end{itemize}
-	\section{درباره دیتاست}
-	مجموعه داده 
-	\lr{Fashion MNIST}
-	 یکی از مجموعه‌های پرکاربرد در یادگیری ماشین و بینایی کامپیوتر است. این مجموعه داده شامل تصاویر سیاه و سفید از انواع پوشاک و اکسسوری‌ها می‌باشد که جایگزین مدرنی برای مجموعه داده کلاسیک \lr{MNIST} است.
-	 نمونه ای از این داده‌ها در شکل
-	 \ref{fig: fmn data}
-	 قابل مشاهده است.
-	 \begin{figure}[H]
-	 	\centering
-	 	\includegraphics[scale=0.45]{figs/fmn data raw}
-	 	\caption{بخشی از دیتاست
-	 		\fm
-	 	}
-	 	\label{fig: fmn data}
-	 \end{figure}
-	 \begin{table}[H]
-	 	\centering			
-	 	\begin{tabular}{|c|c|}
-	 		\hline
-	 		تعداد کل تصاویر & ۷۰,۰۰۰ \\
-	 		\hline
-	 		مجموعه آموزش & ۶۰,۰۰۰ \\
-	 		\hline
-	 		مجموعه آزمون & ۱۰,۰۰۰ \\
-	 		\hline
-	 		ابعاد تصاویر & ۲۸×۲۸ پیکسل \\
-	 		\hline
-	 		نوع تصاویر & سیاه و سفید (تک‌کاناله) \\
-	 		\hline
-	 		محدوده مقادیر پیکسل‌ها & ۰ تا ۲۵۵ \\
-	 		\hline
-	 	\end{tabular}
-	 	\caption{ویژگی‌های دیتاست 
-	 		\lr{Fashion MNIST}
-	 	}
-	 	\label{tbl: fMNIST Chars}
-	 \end{table}
-	این مجموعه داده دارای ۱۰ کلاس مختلف است:
+	\section{Dataset Description}
+	The Fashion MNIST dataset is widely used in machine learning and computer vision. It consists of grayscale images of various clothing and accessories, serving as a modern alternative to the classic MNIST dataset. A sample of the data is shown in Figure \ref{fig: fmn data}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.45]{figs/fmn data raw}
+		\caption{Subset of the \fm dataset}
+		\label{fig: fmn data}
+	\end{figure}
+	\begin{table}[H]
+		\centering
+		\begin{tabularx}{\linewidth}{|X|X|}
+			\toprule
+			Total number of images & 70,000 \\
+			\midrule
+			Training set & 60,000 \\
+			\midrule
+			Test set & 10,000 \\
+			\midrule
+			Image dimensions & 28×28 pixels \\
+			\midrule
+			Image type & Grayscale (single-channel) \\
+			\midrule
+			Pixel value range & 0 to 255 \\
+			\bottomrule
+		\end{tabularx}
+		\caption{Characteristics of the Fashion MNIST dataset}
+		\label{tbl: fMNIST Chars}
+	\end{table}
+	The dataset includes 10 distinct classes:
 	\begin{itemize}
-		\item تی‌شرت/تاپ
-		\item شلوار
-		\item پولیور
-		\item پیراهن
-		\item کت
-		\item صندل
-		\item پیراهن
-		\item کفش ورزشی
-		\item کیف
-		\item چکمه
+		\item T-shirt/top
+		\item Trousers
+		\item Pullover
+		\item Dress
+		\item Coat
+		\item Sandal
+		\item Shirt
+		\item Sneaker
+		\item Bag
+		\item Ankle boot
 	\end{itemize}	
-	\section{اضافه کردن نویز گاوسی
-		\footnote{\lr{Gaussian Noise}}
-		 به دیتاست}
-	نویز گاوسی نوعی نویز می‌باشد که به تصویر اضافه می‌شود. 
-	ضابطه زیر، تابع چگالی احتمال این نویز در دو بعد می‌باشد که برای تصاویر به کار برده می شود.
-		\[ n(x,y) = \frac{1}{2\pi\sigma^2} e^{-\frac{(x-\mu_x)^2 + (y-\mu_y)^2}{2\sigma^2}} \]
-		\begin{flushright}
-			\begin{tabular}{r r}
-				$\mu$ & میانگین\\
-				$\sigma$ & انحراف معیار که پراکندگی نویز را نشان میدهد\\
-				$\sigma^2$ & واریانس\\
-			\end{tabular}
-		\end{flushright}
-		\newpage % optional
-		\noindent
-		در پردازش تصویر، فرمول اضافه کردن نویز گاوسی به تصویر به این صورت است:
-		$$
-		g(x,y) = f(x,y) + n(x,y)
-		$$
-		\begin{flushright}
-			\begin{tabular}{r r}
-				$g(x,y)$ & تصویر نویزی شده\\
-				$f(x,y)$ & تصویر اصلی\\
-				$n(x,y)$ & نویز گوسی که از توزیع نرمال با میانگین و انحراف معیار مشخص پیروی می‌کند\\
-			\end{tabular}
-		\end{flushright}
-		در ابتدا به دیتاست
-		\fm
-		~ نویز گاوسی با واریانس 1.0 و میانگین 0 اضافه می‌کنیم. 
-		از این داده‌ها به عنوان داده نویزی در طول تمرین استفاده خواهد شد.
-		\footnote{در اصل هر تصویر به برداری به طول 784 تبدیل شده و در این تمرین مورد استفاده قرار می‌گیرد.}
-		(بخشی از دیتاست در شکل 
-		\ref{fig: fmn data noisy}
-		)
+	\section{Adding Gaussian Noise to the Dataset}
+	Gaussian Noise is a type of noise added to images. The following probability density function describes this noise in two dimensions, as applied to images:
+	\[ n(x,y) = \frac{1}{2\pi\sigma^2} e^{-\frac{(x-\mu_x)^2 + (y-\mu_y)^2}{2\sigma^2}} \]
+		\begin{tabular}{l | l}
+			$\mu$ & Mean \\
+			$\sigma$ & Standard deviation, indicating noise spread \\
+			$\sigma^2$ & Variance \\
+		\end{tabular}
+	\newpage
+	\noindent
+	In image processing, the formula for adding Gaussian noise to an image is:
+	\[
+	g(x,y) = f(x,y) + n(x,y)
+	\]
+	
+		\begin{tabular}{l | l}
+			$g(x,y)$ & Noisy image \\
+			$f(x,y)$ & Original image \\
+			$n(x,y)$ & Gaussian noise following a normal distribution with specified mean and standard deviation \\
+		\end{tabular}\\
+	
+	Initially, Gaussian noise with a variance of 1.0 and mean of 0 is added to the \fm dataset. These noisy images are used throughout the assignment.\footnote{In practice, each image is converted to a vector of length 784 for use in this assignment.} (A subset of the noisy dataset is shown in Figure \ref{fig: fmn data noisy}.)
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.5]{figs/fmn data noisy}
-		\caption{بخشی از دیتاست نویزی
-			\fm
-		}
+		\caption{Subset of the noisy \fm dataset}
 		\label{fig: fmn data noisy}
 	\end{figure}
 	\newpage
-	\section{کاهش نویز با 
-		\pca
-	}\label{sec: pca}
-	\pca
-	~ به عنوان یک روش کاهش بعد خطی، می‌تواند با بدست آوردن مولفه‌های مهم، اطلاعات مهم داده‌ها را حفظ کند. با در نظر گرفتن نویز وارد شده به تصویر به عنوان بخش غیر مهمی از اطلاعات موجود در داده‌ها، انتظار می رود \pca ~ بتواند کاهش نویز روی تصویر انجام دهد.
-	مراحل کار بدین صورت است که ابتدا ماتریس $Q$
-	\footnote{ماتریس 
-		$Q$
-		 شامل بردار های یکه و متعامد به یکدیگر می‌باشد. و بدین علت
-		 $Q^{-1} = Q^T$
-	}
-	 که شامل بردارهای
-	\lr{eigen}
-	می باشد را برای ماتریس کواریانس 
-	$\Sigma$
-	بدست می ‌آوریم:
-	$$
+	\section{Noise Reduction with \pca}\label{sec: pca}
+	PCA, as a linear dimensionality reduction method, preserves important data components. By treating noise as less significant information, PCA is expected to reduce noise in images. The process involves computing the matrix \( Q \)\footnote{The matrix \( Q \) contains orthogonal unit vectors, so \( Q^{-1} = Q^T \).}, which includes the eigenvectors of the covariance matrix \( \Sigma \):
+	\[
 	\Sigma = Q\Lambda Q^{-1}
-	$$
-	$$
+	\]
+	\[
 	Q = [q_1 \; q_2 \; \cdots \; q_d]
-	$$
-	$$
+	\]
+	\[
 	\lambda_1 \geq \lambda_2 \geq \cdots \geq \lambda_d
-	$$
-	 سپس داده‌ها را بر روی مولفه‌های اصلی تصویر می‌کنیم:
-	 $$
-	 Y = (X - \mu)Q
-	 $$
-	 در نهایت داده‌ها را به بعد اصلی‌شان بر می‌گردانیم:
-	 $$
-	 X' = YQ^T‌+ \mu
-	 $$
-	 انتظار می رود با انتخاب مقدار مناسبی به عنوان تعداد مولفه‌های اصلی در نظر گرفته شده، این کاهش بعد و سپس بازگردانی داده‌ها به تعداد بعد اولیه باعث حذف مقدار زیادی نویز از تصویر بشود.\\
-	 در تکلیف ارائه شده، مقدار 80 مولفه اصلی بهترین مقدار از بین 784 مقدار ممکن برای تعداد مولفه‌های اصلی بوده است. این مقدار به ما خطای 0239.0 را می‌دهد که بهترین خطای بازسازی در بین دیگر مقادیر مولفه‌های اصلی می باشد.(شکل 
-	 \ref{fig: pca best k}
-	 )
-	 \begin{figure}[H]
-	 	\centering
-	 	\includegraphics[scale=0.6]{figs/best k pca}
-	 	\caption{پیدا کردن بهترین مقدار کاهش بعد با توجه به خطای بازسازی
-	 	}
-	 	\label{fig: pca best k}
-	 \end{figure}
-	\section{کاهش نویز با 
-		\ae
-	}\label{sec: ae}
-	یک \ae، یک نوع شبکه عصبی می‌باشد که از دو بخش 
-	\lr{Encoder}
-	و 
-	\lr{Decoder}
-	تشکیل شده است. این نوع شبکه‌های عصبی می‌توانند به نوعی کاهش بعد خطی (در صورت داشتن تابع فعال ساز خطی) و یا غیر خطی (در صورت داشتن تابع فعال ساز غیر خطی) انجام دهند.\\
-	یکی از استفاده‌هایی که از این نوع معماری شبکه می توان انجام داده این است که در ورودی به آن تصویر نویزی داده شود و برچسب هر تصویر نویزی، تصویر بدون نویز باشد. بدین ترتیب \ae ~ آموزش می‌بیند تا نگاشتی از تصویر نویزی به تصویر بدون نویز برقرار کند. که این همان مدلی می‌باشد که ما به آن نیاز داریم.\\
-	شبکه‌ای با فریم ورک پایتورچ  متشکل از چند لایه
-	\lr{Dense}
-	و تابع فعال ساز
-	\lr{ReLU}
-	پیاده سازی شد. تعداد نورون‌های هر لایه به صورت زیر است:
-	\[\text{\lr{Encoder}}:  784 \rightarrow 512 \rightarrow 256 \rightarrow 128 \]
-	\[\text{\lr{Decoder}}:  128 \rightarrow 256 \rightarrow 512 \rightarrow 784 \]
-	در شکل 
-	\ref{fig: ae train test error}
-	رفتار خطای آموزش و تست دیده می‌شود که دال بر یادگیری مناسب بدون بیش برازش
-	\footnote{\lr{Overfit}}
-	 می‌باشد. با این روش و هایپر پارامترهای گفته شده در جدول
-	 \ref{tbl: ae hyparam}
-	 به خطای 013.0 رسیده شد.
-	 \begin{figure}[H]
-	 	\centering
-	 	\includegraphics[scale=0.6]{figs/train test error ae}
-	 	\caption{رویه خطای آموزش و تست \ae}
-	 	\label{fig: ae train test error}
-	 \end{figure}
-	 \begin{table}[H]
-	 	\centering
-	 	\begin{tabular}{|c|c|}
-	 		\hline
-	 		نرخ یادگیری & 001.0\\
-	 		\hline
-	 		سایز هر دسته & 128	\\
-	 		\hline
-	 		\lr{Epochs} & 25\\
-	 		\hline
-	 	\end{tabular}
-	 	\caption{هایپر پارامتر‌های  \lr{Autoencoder}}
-	 	\label{tbl: ae hyparam}
-	 \end{table}
-	\section{نتایج}\label{sec: results}
-	با مقایسه خطای گزارش شده در بخش‌های
-	\ref{sec: ae}
-	و
-	\ref{sec: pca}
-	انتظار می‌رود کاهش نویز با \ae ~ به نسبت \pca ~ بیشتر باشد. در شکل 
-	\ref{fig: method comparison}
-	می‌توان مقایسه ای بین تصویر نویزی، تصویر اصلی، کاهش نویز توسط \pca ~ و کاهش نویز توسط \ae ~ را مشاهده کرد.
+	\]
+	Then, the data is projected onto the principal components:
+	\[
+	Y = (X - \mu)Q
+	\]
+	Finally, the data is reconstructed to its original dimensionality:
+	\[
+	X' = YQ^T + \mu
+	\]
+	By selecting an appropriate number of principal components, this dimensionality reduction and reconstruction process is expected to remove significant noise from the image.\\
+	In this assignment, 80 principal components yielded the best result among 784 possible components, achieving a reconstruction error of 0.0239, the lowest among tested values (Figure \ref{fig: pca best k}).
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{figs/best k pca}
+		\caption{Finding the optimal number of components based on reconstruction error}
+		\label{fig: pca best k}
+	\end{figure}
+	\section{Noise Reduction with \ae}\label{sec: ae}
+	An Autoencoder is a neural network consisting of an Encoder and a Decoder. It can perform linear (with linear activation functions) or nonlinear (with nonlinear activation functions) dimensionality reduction.\\
+	One application of this architecture is to input noisy images and use the corresponding clean images as labels, training the Autoencoder to map noisy images to clean ones, which is the desired model.\\
+	A PyTorch-based network with Dense layers and ReLU activation functions was implemented. The layer structure is as follows:
+	\[
+	\text{Encoder}: 784 \rightarrow 512 \rightarrow 256 \rightarrow 128
+	\]
+	\[
+	\text{Decoder}: 128 \rightarrow 256 \rightarrow 512 \rightarrow 784
+	\]
+	Figure \ref{fig: ae train test error} shows the training and test error trends, indicating proper learning without overfitting. With the hyperparameters listed in Table \ref{tbl: ae hyparam}, an error of 0.013 was achieved.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{figs/train test error ae}
+		\caption{Training and test error trends for the Autoencoder}
+		\label{fig: ae train test error}
+	\end{figure}
+	\begin{table}[H]
+		\centering
+		\begin{tabularx}{\linewidth}{|X|X|}
+			\toprule
+			Learning rate & 0.001 \\
+			\midrule
+			Batch size & 128 \\
+			\midrule
+			Epochs & 25 \\
+			\bottomrule
+		\end{tabularx}
+		\caption{Hyperparameters for the Autoencoder}
+		\label{tbl: ae hyparam}
+	\end{table}
+	\section{Results}\label{sec: results}
+	Comparing the errors reported in Sections \ref{sec: ae} and \ref{sec: pca}, the Autoencoder is expected to outperform PCA in noise reduction. Figure \ref{fig: method comparison} compares the noisy image, original image, PCA-denoised image, and Autoencoder-denoised image.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.45]{figs/resutl comparison}
-		\caption{رویه خطای آموزش و تست \ae}
+		\caption{Comparison of noise reduction results}
 		\label{fig: method comparison}
 	\end{figure}
-	\section{چالش‌: مقایسه عادلانه!}
-	بزرگترین چالشی که در پیاده سازی تکلیف به آن برخورده شد، این بود که دیتاست بایستی از یک منبع دانلود شده و سپس با یکبار اضافه کردن نویز،‌ در کل تمرین و توسط هر روش استفاده و خطای روی آن گزارش می‌شد. این بدین علت بود که کتابخانه 
-	\textit{\lr{Scikit Learn}}
-برای متد \pca ~ و برای آموزش \ae ~ از کتابخانه
-\textit{\lr{PyTorch}}
-استفاده شده است. و اگر هر بار نویز گاوسی به هر یک از دیتاست ها برای هر متد اضافه می‌شود، تضمینی بر یکسانی نویز اضافه شده به تصویر نبود و همچنین لود کردن دیتاست از روی هر کتابخانه برای هر متد منجر به افزونگی نیز می‌گردید. برای همین، تنها یکبار دیتاست دانلود شد و در همان ابتدا نویز به آن اضافه شد و در کل تمرین مورد استفاده قرار گرفت تا در انتها مقایسه عادلانه تضمین گردد.
+	\section{A Challenge: Fair Comparison}
+	The biggest challenge in this assignment was ensuring a fair comparison. The dataset was downloaded once, and noise was added only once to ensure consistency across methods. This was critical because Scikit Learn was used for PCA, and PyTorch was used for the Autoencoder. Adding noise separately for each method could lead to inconsistencies, and loading the dataset separately for each method would cause redundancy. Thus, the dataset was downloaded and noised once, used consistently throughout, ensuring a fair comparison.
 	
-	\section{نتیجه‌گیری}
-	با توجه به نتابج بدست آمده در بخش 
-	\ref{sec: results}
-	می‌توان به این نتیجه رسید که هر دو متد برای کاهش نویز کارساز بوده اند، اما متد \ae ~ بهتر از \pca ~ توانسته کاهش نویز را انجام دهد. که بنظر می‌رسد غیر خطی بودن کاهش بعد \ae ~ این قدرت را به مدل می‌دهد که روابط غیرخطی مهم را نیز در نظر بگیرد و تنها به روابط خطی (به مانند \pca) بسنده نکند.
+	\section{Conclusion}
+	Based on the results in Section \ref{sec: results}, both methods effectively reduced noise, but the Autoencoder outperformed PCA. This is likely due to the Autoencoder’s ability to capture nonlinear relationships, unlike PCA, which is limited to linear relationships.
+	
 \end{document}

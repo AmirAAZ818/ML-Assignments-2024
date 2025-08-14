@@ -3,6 +3,14 @@
 *.aux
 *.log
 *.gz
-Analyzing Titanic Survival Rates/Report_src/Report_Titanic.pdf
+
 *.toc
 *.out
+
+
+# Python cache folders
+__pycache__/
+
+# IDE profiling folders
+.vscode/
+.idea/
