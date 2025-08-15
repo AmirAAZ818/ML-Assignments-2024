@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this repository, noise reduction techniques using Principal Component Analysis (PCA) and Autoencoders on the `Fashion MNIST` dataset is analyzed. The report explores the application of these methods to denoise grayscale clothing images, comparing their effectiveness through reconstruction errors and visualizations.
+In this repository, noise reduction techniques using Principal Component Analysis (PCA) and Autoencoders on the `Fashion MNIST` dataset are analysed and also compared. The report explores the application of these methods to denoise grayscale clothing images, comparing their effectiveness through reconstruction errors and visualizations.
 
 ## Key Aspects
 
