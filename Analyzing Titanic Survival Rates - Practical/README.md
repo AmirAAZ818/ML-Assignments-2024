@@ -1,4 +1,4 @@
-# Titanic Survival Rates Analysis Report README
+# Titanic Survival Rates Analysis Assignment
 
 ## Overview
 
@@ -40,9 +40,9 @@ The Titanic dataset includes 11 features and 1309 samples from Kaggle's "Titanic
   - `Age` imputed via Iterative Imputation (regression-based).
 
 Important Figures:
-- ![Count of Missing and Not Missing Data](./figs/Count-of-missing-and-not-missing%20data-for-each-column.png)  
+- ![Count of Missing and Not Missing Data](https://github.com/AmirAAZ818/ML-2024/blob/main/Analyzing%20Titanic%20Survival%20Rates%20-%20Practical/Assets/Count-of-missing-and-not-missing%20data-for-each-column.png)  
   Frequency of missing vs. non-missing data per feature.
-- ![Missing vs Not Missing Rate](./figs/Missing%20vs%20Not%20Missing%20Rate.png)  
+- ![Missing vs Not Missing Rate]([./figs/Missing%20vs%20Not%20Missing%20Rate.png](https://github.com/AmirAAZ818/ML-2024/blob/main/Analyzing%20Titanic%20Survival%20Rates%20-%20Practical/Assets/Missing%20vs%20Not%20Missing%20Rate.png))  
   Ratio of missing data for affected columns.
 - ![Fare Mean for Different Combinations](./figs/Fare%20Mean%20for%20Different%20Combination.png)  
   Mean Fare by Pclass and Sex combinations.
