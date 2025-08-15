@@ -1,4 +1,4 @@
-# Linear Regression Analysis Report README
+# Linear Regression Practical Assignment
 
 ## Overview
 This repository contains using linear regression techniques for a machine learning assignment. It covers simple and multiple linear regression, comparing closed-form solutions, Stochastic Gradient Descent (SGD), and Batch Gradient Descent (BGD), with and without \( L_2 \) regularization. It includes data preprocessing, model training, and performance evaluation using `Python`.
