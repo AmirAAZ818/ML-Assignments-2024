@@ -59,7 +59,7 @@ The analysis shows that the model trained on the **top 8 features** with an IG t
 
 For a deeper understanding of the data, Principal Component Analysis (**PCA**) was used to visualize the dataset in 2 and 3 dimensions. When using **two components**, the separation between the positive ($>50K$) and negative ($<=50K$) classes is not very distinct. However, by using **three components**, the separability of the classes noticeably increases, suggesting that a 3D view captures a more informative representation of the data.
 
-<div style="display: flex; justify-content: space-between;">
-  <img src="ML-2024\ID3\Assets\pca2.png" alt="PCA With 2 Components" style="width: 30%;"/>
-  <img src="ML-2024\ID3\Assets\pca3.png" alt="PCA With 3 Components" style="width: 30%;"/>
-</div>
+<p align="center">
+  <img src="Assets/pca2.png" alt="PCA With 2 Components" width="45%">
+  <img src="Assets/pca3.png" alt="PCA With 3 Components" width="45%">
+</p>

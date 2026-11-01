@@ -10,14 +10,14 @@ This repository contains using linear regression techniques for a machine learni
   - Models trained using closed-form solution, SGD, and BGD.
   - Cost function: Mean Squared Error (MSE).
   - BGD outperforms SGD, approaching the global minimum.
-  ![Cost vs. Epoch for Simple Linear Regression](./figs/costvsepoch_one_var.png)
+  <img src="Assets/costvsepoch_one_var.png" alt="Cost vs. Epoch for Simple Linear Regression" width="60%">
 - **Multiple Linear Regression**:
   - Preprocessing: Categorical features encoded with One Hot Encoding (`region`) and Integer Encoding (`smoker`, `gender`); data standardized to prevent gradient explosion.
   - Training: Closed-form solution uses Moore-Penrose pseudo-inverse; SGD and BGD compared for convergence.
   - \( L_2 \) regularization applied to closed-form solution, with optimal \( \lambda = 10^{-4} \).
   - Key Figures:
-    - ![Test Error vs. Dataset Size for All Methods](./figs/dataset_size_compar.png)
-    - ![Test Error for Different \( \lambda \) Values](./figs/diff_lambda.png)
+    - <img src="Assets/dataset_size_compar.png" alt="Test Error vs. Dataset Size for All Methods" width="60%">
+    - <img src="Assets/diff_lambda.png" alt="Test Error for Different λ Values" width="60%">
 - **Findings**:
   - BGD is more reliable than SGD for small datasets.
   - Closed-form solution stabilizes with sufficient data (~20 samples).

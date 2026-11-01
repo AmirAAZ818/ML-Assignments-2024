@@ -40,11 +40,11 @@ The Titanic dataset includes 11 features and 1309 samples from Kaggle's "Titanic
   - `Age` imputed via Iterative Imputation (regression-based).
 
 Important Figures:
-- ![Count of Missing and Not Missing Data](https://github.com/AmirAAZ818/ML-2024/blob/main/Analyzing%20Titanic%20Survival%20Rates%20-%20Practical/Assets/Count-of-missing-and-not-missing%20data-for-each-column.png)  
+- <img src="Assets/Count-of-missing-and-not-missing%20data-for-each-column.png" alt="Count of Missing and Not Missing Data" width="45%">  
   Frequency of missing vs. non-missing data per feature.
-- ![Missing vs Not Missing Rate]([./figs/Missing%20vs%20Not%20Missing%20Rate.png](https://github.com/AmirAAZ818/ML-2024/blob/main/Analyzing%20Titanic%20Survival%20Rates%20-%20Practical/Assets/Missing%20vs%20Not%20Missing%20Rate.png))  
+- <img src="Assets/Missing%20vs%20Not%20Missing%20Rate.png" alt="Missing vs Not Missing Rate" width="100%">  
   Ratio of missing data for affected columns.
-- ![Fare Mean for Different Combinations](./figs/Fare%20Mean%20for%20Different%20Combination.png)  
+- <img src="Assets/Fare%20Mean%20for%20Different%20Combination.png" alt="Fare Mean for Different Combinations" width="45%">  
   Mean Fare by Pclass and Sex combinations.
 
 ## Statistical Analysis and Visualization
@@ -52,7 +52,7 @@ Important Figures:
 Focuses on population distribution, survival rates, and age-related trends.
 
 - **Population Distribution**: By `Sex`, `Pclass`, and `Embarked`.  
-  ![Passenger's Population in Different Groups](./figs/Passenger's%20Population%20In%20Different%20Groups.png)
+  <img src="Assets/Passenger's%20Population%20In%20Different%20Groups.png" alt="Passenger's Population in Different Groups" width="80%">
 
 - **Survival Analysis**:
   - Overall: ~62% died (mostly males due to higher male count).
@@ -61,11 +61,11 @@ Focuses on population distribution, survival rates, and age-related trends.
   - `Family Size`: Inverse relationship with survival (larger families had lower survival rates). New feature: Family Population = SibSp + ParCh.
 
   Important Figures:
-  - ![Survival Rate of Passengers by Pclass](./figs/Survival%20Rate%20of%20the%20Passengers%20by%20Pclass.png)  
+  - <img src="Assets/Survival%20Rate%20of%20the%20Passengers%20by%20Pclass.png" alt="Survival Rate of Passengers by Pclass" width="100%">  
     Survival ratios by Sex, Pclass, and overall.
-  - ![Age Distribution for Different Survival Status](./figs/Age%20Distribution%20for%20Different%20Survival%20Status.png)  
+  - <img src="Assets/Age%20Distribution%20for%20Different%20Survival%20Status.png" alt="Age Distribution for Different Survival Status" width="100%">  
     Age histograms for survivors vs. non-survivors.
-  - ![Survival of Passengers by Family Population](./figs/Survival%20of%20Passengers%20by%20Family%20Population.png)  
+  - <img src="Assets/Survival%20of%20Passengers%20by%20Family%20Population.png" alt="Survival of Passengers by Family Population" width="45%">  
     Family size frequency by survival status.
 
 - **Age Analysis**: Box plots show age spreads by survival and Pclass.  
@@ -75,7 +75,7 @@ Focuses on population distribution, survival rates, and age-related trends.
   - Older adults (>60) mostly non-survivors; children mostly from upper/middle classes.
 
   Important Figure:
-  - ![Box Plots of Age Column in Different Groups](./figs/Box%20plots%20of%20Age%20Column%20in%20Different%20Groups.png)
+  - <img src="Assets/Box%20plots%20of%20Age%20Column%20in%20Different%20Groups.png" alt="Box Plots of Age Column in Different Groups" width="100%">
 
 ## Conclusions
 

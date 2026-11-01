@@ -7,10 +7,10 @@ This repository serves as an archive of assignments completed for the Machine Le
 The repository is organized to provide easy access to individual assignments, each contained within its own folder. **Each folder includes a dedicated README file** detailing the specific objectives, methods, and outcomes of the assignment. The code and reports are intended for educational purposes.
 
 ## Directory Structure
-- **Analyzing Titanic Survival Rates - Practical**: Exploratory data analysis on the Titanic dataset.
-- **Decision Tree - ID3 - Practical**: Implementation of the ID3 decision tree algorithm.
-- **Linear Regression - Practical**: Practical application of linear regression with dataset analysis.
-- **Noise Reduction with PCA and Autoencoders**: Noise reduction using PCA and Autoencoders on Fashion MNIST.
+- **[Analyzing Titanic Survival Rates - Practical](Analyzing%20Titanic%20Survival%20Rates%20-%20Practical/README.md)**: Exploratory data analysis on the Titanic dataset.
+- **[Decision Tree - ID3 - Practical](Decision%20Tree%20-%20ID3%20-%20Practical/README.md)**: Implementation of the ID3 decision tree algorithm.
+- **[Linear Regression - Practical](Linear%20Regression%20-%20Practical/README.md)**: Practical application of linear regression with dataset analysis.
+- **[Noise Reduction with PCA and Autoencoders](Noise%20Reduction%20with%20PCA%20and%20Autoencoders/README.md)**: Noise reduction using PCA and Autoencoders on Fashion MNIST.
 
 ## Libraries Used
 The assignments were implemented in Python, utilizing the following libraries:
